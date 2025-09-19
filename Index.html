@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Color Picker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        .controls {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .control-group {
+            display: inline-block;
+            margin: 10px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        #colorPicker {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        #canvas {
+            border: 2px solid #333;
+            display: block;
+            margin: 0 auto;
+            background-color: #ffffff;
+        }
+        
+        .canvas-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Canvas Color Picker</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="colorPicker">Choose Background Color:</label>
+                <input type="color" id="colorPicker" value="#ffffff">
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="canvas" width="1280" height="720"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Get references to the canvas and color picker
+        const canvas = document.getElementById('canvas');
+        const colorPicker = document.getElementById('colorPicker');
+        const ctx = canvas.getContext('2d');
+        
+        // Function to change canvas background color
+        function changeCanvasBackground(color) {
+            // Save the current canvas state
+            ctx.save();
+            
+            // Clear the canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Set the background color
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Restore the canvas state
+            ctx.restore();
+        }
+        
+        // Initialize canvas with white background
+        changeCanvasBackground('#ffffff');
+        
+        // Add event listener to color picker
+        colorPicker.addEventListener('change', function(event) {
+            const selectedColor = event.target.value;
+            changeCanvasBackground(selectedColor);
+        });
+        
+        // Also respond to input events for real-time color changes
+        colorPicker.addEventListener('input', function(event) {
+            const selectedColor = event.target.value;
+            changeCanvasBackground(selectedColor);
+        });
+    </script>
+</body>
+</html>
